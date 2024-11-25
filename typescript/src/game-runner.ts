@@ -1,7 +1,10 @@
-import {Game} from './game';
+import Rand from 'rand-seed';
+import { Game } from './game';
 
 export class GameRunner {
-    public static main(): void {
+    public static main(seed = 'prod'): void {
+        const rand = new Rand(seed);
+
         const game = new Game();
         game.add("Chet");
         game.add("Pat");
@@ -10,18 +13,17 @@ export class GameRunner {
         let notAWinner;
         do {
 
-            game.roll(Math.floor(Math.random() * 6) + 1);
-        
-            if (Math.floor(Math.random() * 10) == 7) {
-            notAWinner = game.wrongAnswer();
+            game.roll(Math.floor(rand.next() * 6) + 1);
+
+            if (Math.floor(rand.next() * 10) == 7) {
+                notAWinner = game.wrongAnswer();
             } else {
-            notAWinner = game.wasCorrectlyAnswered();
+                notAWinner = game.wasCorrectlyAnswered();
             }
-        
+
         } while (notAWinner);
     }
 }
 
 GameRunner.main();
 
-  
